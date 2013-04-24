@@ -1,0 +1,16 @@
+﻿
+@{
+    ViewBag.Title = "Game Of Life";
+}
+
+<h2>Game of Life</h2>
+<div>
+    
+    <canvas id="golcanvas" class="gamecanvas"></canvas>
+</div>
+
+@section scripts
+{
+    
+    @Scripts.Render("~/bundles/gol")
+}
