@@ -24,7 +24,22 @@
 
     var cols = 40, rows = 30, cellSize = 3.5, cellSep = .7, cellRadius=.8, bgcolor = "#F2F2F2", deadcolor = "#FFFFFF", alivecolor = "#04BA6B";
     
+    function Cell(stage,x,y) {
+        this.isAlive = false;
+        this.shape = new createjs.Shape();
+        this.stage = stage;
+        this.color = this.isAlive ? alivecolor: deadcolor;
+        
+        this.stage.addChild(this.shape);
+        this.shape.x = mm((x * cellSize) + (x * cellSep) + cellSep);
+        this.shape.y = mm((y * cellSize) + (y * cellSep) + cellSep);
+        
+        this.draw = function() {
+            this.shape.graphics.beginFill(this.color).drawRoundRect(0, 0, mm(cellSize), mm(cellSize), mm(cellRadius));
+        };
+        
 
+    }
 
     function UiManager() {
         this.stage = new createjs.Stage("golcanvas");
@@ -57,12 +72,9 @@
         for (var i = 0; i < rows; i++) {
             this.cells.push([]);
             for (var j = 0; j < cols; j++) {
-                var cell = new createjs.Shape();
-                cell.graphics.beginFill(deadcolor).drawRoundRect(0, 0, mm(cellSize), mm(cellSize), mm(cellRadius));
-                cell.y = mm((i * cellSize) + (i * cellSep) + cellSep) ;
-                cell.x = mm((j * cellSize) + (j * cellSep) + cellSep);
-                this.stage.addChild(cell);
+                var cell = new Cell(this.stage, j, i);
                 this.cells[i].push(cell);
+                cell.draw();
             }
         }
     }
