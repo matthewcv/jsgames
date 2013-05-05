@@ -25,6 +25,7 @@
     window.gol.Game = function(rows, cols, init) {
         this.rows = rows;
         this.cols = cols;
+        this.generation = 1;
         this.grid = new Array(rows);
         for (var i = 0; i < rows; i++) {
             this.grid[i] = new Array(cols);
@@ -34,7 +35,7 @@
         refreshGrid(this.grid, init);
         
 
-        this.life = function() {
+        this.nextGeneration = function() {
             var newliving = [];
             for (var y = 0; y < this.rows; y++) {
                 for (var x = 0; x < this.cols; x++) {
@@ -52,8 +53,21 @@
 
             }
             refreshGrid(this.grid, newliving);
+            this.generation++;
             return this.grid;
 
+        };
+
+        this.hasLife = function() {
+            for (var y = 0; y < this.rows; y++) {
+                for (var x = 0; x < this.cols; x++) {
+                    if (this.grid[y][x]) {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
         };
 
         this.countLivingNeighbors = function(x, y) {
@@ -68,9 +82,9 @@
             //SE neighbor
             if (x < this.cols - 1 && y < this.rows - 1 && this.grid[y + 1][x + 1]) living++;
             //S neighbor
-            if (y < this.rows + 1 && this.grid[y + 1][x]) living++;
+            if (y < this.rows - 1 && this.grid[y + 1][x]) living++;
             //SW neighbor
-            if (y < this.rows + 1 && x > 0 && this.grid[y + 1][x - 1]) living++;
+            if (y < this.rows - 1 && x > 0 && this.grid[y + 1][x - 1]) living++;
             //W neighbor
             if (x > 0 && this.grid[y][x - 1]) living++;
             //NW neighbor

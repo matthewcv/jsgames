@@ -4,16 +4,31 @@
 }
 
 <h2>Game of Life</h2>
+<div id="gamearea">
 <div>
-    <a id="start-game" href="#Start">Start the game</a>
+    <a  href="#Start game" data-bind="click: startGame, visible: !gameIsRunning()">Start the game</a>
+    <a  href="#Stopt game" data-bind="click: stopGame, visible: gameIsRunning()">Stop the game</a>
+    <span data-bind="visible: !gameIsRunning()">
+        rows: <input type="number" data-bind="value: rows"/>
+        columns: <input type="number" data-bind="value: columns" />
+        <a href="#generate random life" data-bind="click: generateRandomLife" >Generate random life</a>:<input type="number" min="0" max="100" step="5" data-bind="value: randomLivingCells"/>%
+        </span>
+    <span>Generation: </span><span data-bind="text: generation" />
 </div>
 <div>
     
     <canvas id="golcanvas" class="gamecanvas"></canvas>
 </div>
-
+</div>
 @section scripts
 {
     
     @Scripts.Render("~/bundles/gol")
+
+    <style type="text/css">
+        input {
+            width: 4em;
+        }
+
+    </style>
 }

@@ -14,6 +14,7 @@ namespace jsgames
 
             bundles.Add(new ScriptBundle("~/bundles/gol")
                 .Include("~/Scripts/jquery-{version}.js")
+                .Include("~/Scripts/knockout-{version}.js")
                 .Include("~/Scripts/bootstrap.js")
                 .Include("~/Scripts/easeljs-0.6.0.js")
                 .IncludeDirectory("~/Scripts/gol","*.js")
