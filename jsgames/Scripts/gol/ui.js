@@ -138,17 +138,32 @@
             this.gameIsRunning(false);
         };
 
-        this.generateRandomLife = function() {
-            var lifes = parseInt( this.rows() * this.columns() * ( this.randomLivingCells()  / 100));
+        this.generateRandomLife = function () {
+            var total = parseInt(this.rows() * this.columns());
+            var random = parseInt(this.randomLivingCells()) ;
+            var lifes = total * (random / 100);
 
-            var alive = this.randomLivingCells > 50;
+            var alive = random < 50;
+            if (!alive) {
+                lifes = total - lifes;
+            }
+            
+            for (var y = 0; y < this.rows() ; y++) {
+                for (var x = 0; x < this.columns() ; x++) {
+                    var c = this.cells[y][x];
+                    c.isAlive(!alive);
+                }
+            }
+
 
             for (var i = 0; i < lifes; ) {
                 var x = Math.floor(Math.random() * this.columns()),
                     y = Math.floor(Math.random() * this.rows());
 
-                this.cells[y][x].isAlive(true);
-                i++;
+                if (this.cells[y][x].isAlive() != alive) {
+                    this.cells[y][x].isAlive(alive);
+                    i++;
+                }
             }
 
 
