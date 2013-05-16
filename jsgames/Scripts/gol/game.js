@@ -1,6 +1,6 @@
 ﻿(function() {
 
-    window.gol = {};
+    window.gol = window.gol || {};
 
     function refreshGrid(grid, alive) {
         //grid is the whole universe with living and dead cells
